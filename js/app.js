@@ -19,6 +19,14 @@ const phrases = [
 // Missed is the life counter 
 let missed = 0; 
 
+//Function: gets random number from 0  UP TO the max value
+function randomNumber(max) {
+    const number = Math.floor(Math.random() * max)
+    return number
+};
+
+
+
 
 overlay.addEventListener('click', (e) => {
     if (e.target.className === 'btn__reset'){
