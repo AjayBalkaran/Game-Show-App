@@ -22,10 +22,19 @@ let missed = 0;
 //Function: gets random number from 0  UP TO the max value
 function randomNumber(max) {
     const number = Math.floor(Math.random() * max)
-    return number
+    return number;
+};
+
+function getRandomPhraseAsArray (arr) {
+    // choose a phrase randomly 
+    const selectedPhrase = arr[randomNumber(arr.length)];
+    //splits the phrase into characters and collects into a new arr 
+    newArr = selectedPhrase.split("");
+    return newArr;
 };
 
 
+getRandomPhraseAsArray(phrases);
 
 
 overlay.addEventListener('click', (e) => {
