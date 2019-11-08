@@ -19,6 +19,7 @@ const phrases = [
 // Missed is the life counter 
 let missed = 0; 
 let selectedPhrase = [];
+let letterFound;
 
 //Function: gets random number from 0  UP TO the max value
 function randomNumber(max) {
@@ -33,41 +34,41 @@ function getRandomPhraseAsArray (arr) {
     newArr = randomPhrase.split("");
     return newArr;
 };
-selectedPhrase= getRandomPhraseAsArray(phrases);
 
 function addPhraseToDisplay(arrOfCharacters) {
     // loops through an array of characters
     for (let i = 0; i < arrOfCharacters.length; i ++) {
         // create a list item, put the character inside of the list item
-        const listItem = document.createElement('li');
-        listItem.innerHTML = arrOfCharacters[i];
+        let listItem = document.createElement('li');
+        listItem.textContent = arrOfCharacters[i];
         // added the class letter if charater is not space
-        if(listItem.innerHTML !== ' ') {
-            listItem.className = 'letter';
-        } 
+        if(listItem.textContent !== ' ') {
+            listItem.classList.add('letter');
+        } else {
+            listItem.classList.add('space');
+        }
         // append list item to #phrase ul
         phrase.append(listItem);
     }
 };
 
+selectedPhrase= getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(selectedPhrase);
 
-function checkLetter(button) {
-    //get all elements with class letter
-    letter = document.querySelectorAll('.letter');
-    //checks if button press matches any letter
-    for ( let i = 0; i < letter.length; i ++) {
-        console.log(letter[i].className)
-        if (button.textContent === letter[i].textContent) {
-            letter[i].className += 'show'
-            let matchingLetter = letter[i].textContent;
-            return matchingLetter;
-        } else {
-            return null
-        }    
+function checkLetter(buttonClicked){
+    const letterList = document.querySelectorAll('li.letter');
+    let lettterMatch = null;
+    for (let i=0; i < letterList.length; i++){
+        letter = letterList[i];
+        letterCase = letter.textContent.toLowerCase();
+        
+        if(letterCase == buttonClicked.textContent) {
+            letter.classList.add("show");
+            lettterMatch = letterCase;
+      }
     }
-}
-
+    return lettterMatch;
+  }
 
 
 overlay.addEventListener('click', (e) => {
@@ -75,3 +76,17 @@ overlay.addEventListener('click', (e) => {
         e.target.parentNode.style.display = 'none';
     }
 });
+
+qwerty.addEventListener('click', (e) => {
+    //only allow button click events
+    if (e.target.tagName === 'BUTTON') {
+        button = event.target
+        //adds class name 'chosen'
+        button.classList.add('chosen');
+        //does not allow button to be clicked twice
+        button.disabled = true;
+        //calles check letter function, stores it in letter found var
+        letterFound = checkLetter(button);
+    }
+});
+
