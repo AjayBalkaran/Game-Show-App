@@ -18,6 +18,7 @@ const phrases = [
 
 // Missed is the life counter 
 let missed = 0; 
+let selectedPhrase = [];
 
 //Function: gets random number from 0  UP TO the max value
 function randomNumber(max) {
@@ -27,14 +28,46 @@ function randomNumber(max) {
 
 function getRandomPhraseAsArray (arr) {
     // choose a phrase randomly 
-    const selectedPhrase = arr[randomNumber(arr.length)];
+    const randomPhrase = arr[randomNumber(arr.length)];
     //splits the phrase into characters and collects into a new arr 
-    newArr = selectedPhrase.split("");
+    newArr = randomPhrase.split("");
     return newArr;
 };
+selectedPhrase= getRandomPhraseAsArray(phrases);
 
+function addPhraseToDisplay(arrOfCharacters) {
+    // loops through an array of characters
+    for (let i = 0; i < arrOfCharacters.length; i ++) {
+        // create a list item, put the character inside of the list item
+        const listItem = document.createElement('li');
+        listItem.innerHTML = arrOfCharacters[i];
+        // added the class letter if charater is not space
+        if(listItem.innerHTML !== ' ') {
+            listItem.className = 'letter';
+        } 
+        // append list item to #phrase ul
+        phrase.append(listItem);
+    }
+};
 
-getRandomPhraseAsArray(phrases);
+addPhraseToDisplay(selectedPhrase);
+
+function checkLetter(button) {
+    //get all elements with class letter
+    letter = document.querySelectorAll('.letter');
+    //checks if button press matches any letter
+    for ( let i = 0; i < letter.length; i ++) {
+        console.log(letter[i].className)
+        if (button.textContent === letter[i].textContent) {
+            letter[i].className += 'show'
+            let matchingLetter = letter[i].textContent;
+            return matchingLetter;
+        } else {
+            return null
+        }    
+    }
+}
+
 
 
 overlay.addEventListener('click', (e) => {
